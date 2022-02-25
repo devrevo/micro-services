@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,6 +27,9 @@ public class CompteServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CompteServiceApplication.class, args);
 	}
+	
+	@Autowired 
+	OperationServiceImp osi;
 	@Bean
     CommandLineRunner start(ClientService cltService,CompteRepository compteRepository, RepositoryRestConfiguration restConfiguration){
 		
@@ -40,9 +44,9 @@ public class CompteServiceApplication {
 	            comptes.add(compte);
 	        });
 	        
-	        new OperationServiceImp().virement(comptes.get(0), comptes.get(1), 1000);
-	        new OperationServiceImp().virement(comptes.get(2), comptes.get(0), 2000);
-	        new OperationServiceImp().virement(comptes.get(1), comptes.get(0), 4000);
+	        osi.virement(comptes.get(0), comptes.get(1), 1000);
+	        osi.virement(comptes.get(2), comptes.get(0), 2000);
+	        osi.virement(comptes.get(1), comptes.get(0), 4000);
             System.out.println("Operations Done !!!!");
         };
     }
